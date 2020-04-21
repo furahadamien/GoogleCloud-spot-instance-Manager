@@ -24,8 +24,9 @@ Cloud computing has evolved continously over the years. Cloud service providers 
 
 Unlike Amazon's Elastic Computer Cloud(EC2), Google's Preemptible instances always terminate after they run for 24 hours and they can not live migrate to other VM instnaces. However, the machines cna be restarted to renew the 24 hours lease, though they can not be restarted automatically. 
 
-    Preemption process.
-    -------------------
+Preemption process.
+-------------------
+Google's Compute Engine is guaranteed t terminate these instances after 24 hours. However, due to fluctuations in their demand they can be terrminated at anytime. Compute Engine send an eviction notice 30 seconds before instance termination. The 30 second warning is intended to allow clean up before migration. Once the 30s period elapses, the instances if terminated. The instance can be stopped and restarted manually. This allows Compute Engine to create a new lease for the tenant.
 
 
 references
@@ -53,6 +54,6 @@ references
     8.Preemptible VM instances
         https://cloud.google.com/compute/docs/instances/preemptible
     
-    9. 
-
+    9. preemption_process
+        https://cloud.google.com/compute/docs/instances/preemptible#preemption_process
 

@@ -11,6 +11,18 @@ In this project, I aim implement a manager with a series of fault tolerance mech
 In my implementation, I will provide the design of my proposed architecture. I will also write source code and run experiments to gauge the performance of the manager.
 
 
+
+Abstract
+---------
+Cloud service providers offer their unused resources for leasing in the spot market$^7$. One such services is provided by Google Cloud's Preeemptible Virtual Machines. Preemtible VMs are virtual Machines that offer lower costs in exchange for reduced reliability. Due to their below standard demand cost, they  can be used compute intensive applicationn. The instances can however, be revorked at anytime depending on the fluctions in their demand. To mitigate the impact of revocation, there is need to implement fault torelance-mechanism.
+
+In this paper, we propose a manager for Google Cloud spot instances that aims to reduce the impact of spot instance revocation.The manager implement state of the art mechnism like continous checkpointing, Virtual Machine replication and Virtual Machine health checking. To take an advantage of Preemptible VMs 24-hour window, the manager impements a scheduler that prioritizes migration of work from MVs with experiring leases.
+
+Introduction
+------------
+Cloud computing has evolved continously over the years. Cloud service providers now offer a wide variety of compute resourses to their customers that are both cost effective and efficient. However, in some cases there is a tradeoff between cost effectiveness and efficeiecy of the service. One such service that offers low cost compute resources at the expecnse of realibily is spot instances like Google Cloud's Preemtive MVs. Preemptive VMs are instances that you can creat and run at a lower cost that normal instances$^8$. These instances require that your application has a fault torelant mechism because they can can be terminate at anytime depending on their demand.
+
+
 references
 -----------
     1. A Workflow Scheduling Technique to Consider Task Processing Rate in        Spot Instance-Based Cloud
@@ -29,5 +41,13 @@ references
         https://link.springer.com/chapter/10.1007/978-3-642-24403-2_16
 
     6. SpotOn: A Batch Computing Service for the Spot Market
+
+    7. W. Voorsluys and R. Buyya, "Reliable Provisioning of Spot Instances for Compute-intensive Applications," 2012 IEEE 26th International Conference on Advanced Information Networking and Applications, Fukuoka, 2012, pp. 542-549.
+    https://ieeexplore.ieee.org/abstract/document/6184917
+
+    8.Preemptible VM instances
+        https://cloud.google.com/compute/docs/instances/preemptible
+    
+    9. 
 
 

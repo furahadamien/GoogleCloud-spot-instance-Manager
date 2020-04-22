@@ -39,11 +39,11 @@ Google Cloud provides an IaaS platform that comes at different cost and reliabil
 The aim of our design is to be able to complete the work at a much lower cost than we could have incurred, but with nearly the same effciency as using on-demand instances. Depending on the priority of the job that we are runnning, we want to be able run the job either exclusively on the preemptible instances or run it on the preemptible instance while storing their state on an on-demand instance. Google cloud allows us to have both the on-demand and preemptible instances. This is something that we are aiming to exploit by crearing a hybrid mechanism that uses both set of instances in cases where we have long running and compute intensive jobs. In the architechure of the manager, we are also proposing the ability to be able to run a job parallel in multiple VMs before migration to allow state job state transitioning and minimize work loss.
 ### Fault tolerance mechanism ###
 The key aspect of Preemptible instance is that the virtual machine used are those that are deemed to be surplus to requirements by Google Cloud. this means that, as soon as they are deemed required they can be terminated and our jobs evicted. Given that we are only give a 30 second eviction notice, there is need for a fault-tolerance mechnism that ensures that any running jobs and stored states are not lost andd dcan be migrated to health machines without increasing the cost of execution. 
-#### Continous checkpointing ####
-#### Virtual Machine replication ####
-#### Migration Scheduling #####
-#### Continous health checking ####
-#### Lease renewal ####
+#### * Continous checkpointing ####
+#### * Virtual Machine replication ####
+#### * Migration Scheduling #####
+#### * Continous health checking ####
+#### * Lease renewal ####
 ### Architecture and Implementation ###
 
 references

@@ -33,12 +33,17 @@ Background works
 
 Preemptible Virtual Machines manager
 -------------------------------------
-Google Cloud provides an IaaS platform that comes at different cost and reliability. It provides virtual machine instances in different availabity zones globally and these are provided at different pricing mechanism depending on their volatility and reliability. On-demand instances have 0\% revocation probability and are thus priced ar a higher fixed price than preemptible instances that are guaranteed to be recoved after 24 hours, with a 15\% revocation probability within the 24-hour duration. Given that the cost of preemptible instances can be up to 10X less than that of on-demand instances, in this paper we present an instance manager that aims to leap the full benefits of preemptible VMs while ensuring that we get almost the same performance as the on-demand instances by minimizing or eliminating work loss. 
+Google Cloud provides an IaaS platform that comes at different cost and reliability. It provides virtual machine instances in different availabity zones globally and these are provided at different pricing mechanism depending on their volatility and reliability. On-demand instances have 0\% revocation probability and are thus priced ar a higher fixed price than preemptible instances that are guaranteed to be recoved after 24 hours, with a 15\% revocation probability within the 24-hour duration$^{10}$. Given that the cost of preemptible instances can be up to 10X less than that of on-demand instances, in this paper we present an instance manager that aims to leap the full benefits of preemptible VMs while ensuring that we get almost the same performance as the on-demand instances by minimizing or eliminating work loss. 
 
 ### Overview ###
-
+The aim of our design is to be able to complete the work at a much lower cost than we could have incurred, but with nearly the same effciency as using on-demand instances. Depending on the priority of the job that we are runnning, we want to be able run the job either exclusively on the preemptible instances or run it on the preemptible instance while storing their state on an on-demand instance. Google cloud allows us to have both the on-demand and preemptible instances. This is something that we are aiming to exploit by crearing a hybrid mechanism that uses both set of instances in cases where we have long running and compute intensive jobs. In the architechure of the manager, we are also proposing the ability to be able to run a job parallel in multiple VMs before migration to allow state job state transitioning and minimize work loss.
 ### Fault tolerance mechanism ###
-
+The key aspect of Preemptible instance is that the virtual machine used are those that are deemed to be surplus to requirements by Google Cloud. this means that, as soon as they are deemed required they can be terminated and our jobs evicted. Given that we are only give a 30 second eviction notice, there is need for a fault-tolerance mechnism that ensures that any running jobs and stored states are not lost andd dcan be migrated to health machines without increasing the cost of execution. 
+#### Continous checkpointing ####
+#### Virtual Machine replication ####
+#### Migration Scheduling #####
+#### Continous health checking ####
+#### Lease renewal ####
 ### Architecture and Implementation ###
 
 references
@@ -69,3 +74,5 @@ references
     9. preemption_process
         https://cloud.google.com/compute/docs/instances/preemptible#preemption_process
 
+    10.Preemption selection
+        https://cloud.google.com/compute/docs/instances/preemptible#preemption_selection

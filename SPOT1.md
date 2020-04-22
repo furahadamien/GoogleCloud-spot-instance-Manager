@@ -14,20 +14,30 @@ In my implementation, I will provide the design of my proposed architecture. I w
 
 Abstract
 ---------
-Cloud service providers offer their unused resources for leasing in the spot market$^7$. One such services is provided by Google Cloud's Preeemptible Virtual Machines. Preemtible VMs are virtual Machines that offer lower costs in exchange for reduced reliability. Due to their below standard demand cost, they  can be used compute intensive applicationn. The instances can however, be revorked at anytime depending on the fluctions in their demand. To mitigate the impact of revocation, there is need to implement fault torelance-mechanism.
-
-In this paper, we propose a manager for Google Cloud spot instances that aims to reduce the impact of spot instance revocation.The manager implement state of the art mechnism like continous batch checkpointing, Virtual Machine replication and Virtual Machine health checking. To take an advantage of Preemptible VMs 24-hour window, the manager impements a scheduler that prioritizes migration of work from MVs with experiring leases.
+Cloud service providers offer their unused resources for leasing in the spot market$^7$. One such service is provided by Google Cloud's Preemptible Virtual Machines. Preemptible VMs are Virtual Machines that offer lower costs in exchange for reduced reliability. Due to their below standard demand cost, they  can be used to compute resource intensive applications. The instances can however, be revoked at anytime depending on the fluctuations in their demand. To mitigate the impact of revocation, there is need to implement fault torelance-mechanism. In this paper, we propose a manager for Google Cloud spot instances that aims to reduce the impact of spot instance revocation. The manager implements state of the art mechanisms like continuous batch check-pointing, Virtual Machine replication and Virtual Machine health checking. To take an advantage of Preemptible VMs 24-hour window, the manager implements a scheduler that prioritizes migration of work from VMs with expiring leases.
 
 Introduction
 ------------
-Cloud computing has evolved continously over the years. Cloud service providers now offer a wide variety of compute resourses to their customers that are both cost effective and efficient. However, in some cases there is a tradeoff between cost effectiveness and efficeiecy of the service. One such service that offers low cost compute resources at the expecnse of realibily is spot instances like Google Cloud's Preemtive MVs. Preemptive VMs are instances that you can creat and run at a lower cost that normal instances$^8$. These instances require that your application has a fault torelant mechism because they can can be terminated at anytime depending on their demand. These instances are good for batch processing jobs because if the machine is termiated when processing one batch, the whole job does not completely stop.
+### Motivation ###
+Cloud computing has evolved continuously over the years. Cloud service providers now offer a wide variety of compute resources to their customers that are both cost effective and efficient. However, in some cases, there is a trade off between cost effectiveness and efficiency of the service. One such service that offers low cost compute resources at the expense of reliability is spot instances like Google Cloud's Preemptive VMs. Preemptive VMs are instances that you can create and run at a lower cost that normal instances$^8$. These instances require that your application has a fault tolerant mechanism because they can can be terminated at anytime depending on their demand. These instances are good for batch processing jobs because if the machine is terminated when processing one batch, the whole job does not completely stop.\\
+\\
+Unlike Amazon's Elastic Computer Cloud(EC2), Google's Preemptible instances always terminate after they run for 24 hours and they can not live migrate to other VM instnaces. However, the machines can be restarted to renew the 24 hours lease, though they can not be restarted automatically. Even after migration, the discs need to be deleted to avoid incurring storage charges.\\
+\\Looking at the features of the instances, there is need for models and mechanisms to minimize the amount of work lost when the instances terminate while at the same time taking advantage of the low costs. Effective mechanisms to this have to continuously listen to eviction notices, find healthy machines to migrate to and have a proper scheduling mechanism that migrates works depending on their priorities
 
-Unlike Amazon's Elastic Computer Cloud(EC2), Google's Preemptible instances always terminate after they run for 24 hours and they can not live migrate to other VM instnaces. However, the machines cna be restarted to renew the 24 hours lease, though they can not be restarted automatically. 
+### Preemption process. ###
 
-Preemption process.
--------------------
-Google's Compute Engine is guaranteed t terminate these instances after 24 hours. However, due to fluctuations in their demand they can be terrminated at anytime. Compute Engine send an eviction notice 30 seconds before instance termination. The 30 second warning is intended to allow clean up before migration. Once the 30s period elapses, the instances if terminated. The instance can be stopped and restarted manually. This allows Compute Engine to create a new lease for the tenant.
+Google's Compute Engine is guaranteed to terminate these instances after 24 hours. However, due to fluctuations in their demand they can be terminated at anytime. Compute Engine send an eviction notice 30 seconds before instance termination. The 30 second warning is intended to allow clean up before migration. Once the 30s period elapses, the instances if terminated. The instance can be stopped and restarted manually. This allows Compute Engine to create a new lease for the tenant.
 
+Background works
+-----------------
+
+Preemptible Virtual Machines manager
+-------------------------------------
+### Overview ###
+
+### Fault tolerance mechanism ###
+
+### Architecture and Implementation ###
 
 references
 -----------

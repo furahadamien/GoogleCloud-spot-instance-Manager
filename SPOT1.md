@@ -33,6 +33,8 @@ Background works
 
 Preemptible Virtual Machines manager
 -------------------------------------
+Google Cloud provides an IaaS platform that comes at different cost and reliability. It provides virtual machine instances in different availabity zones globally and these are provided at different pricing mechanism depending on their volatility and reliability. On-demand instances have 0\% revocation probability and are thus priced ar a higher fixed price than preemptible instances that are guaranteed to be recoved after 24 hours, with a 15\% revocation probability within the 24-hour duration. Given that the cost of preemptible instances can be up to 10X less than that of on-demand instances, in this paper we present an instance manager that aims to leap the full benefits of preemptible VMs while ensuring that we get almost the same performance as the on-demand instances by minimizing or eliminating work loss. 
+
 ### Overview ###
 
 ### Fault tolerance mechanism ###

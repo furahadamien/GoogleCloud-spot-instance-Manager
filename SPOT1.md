@@ -44,6 +44,9 @@ The key aspect of Preemptible instance is that the virtual machine used are thos
 #### Migration Scheduling #####
 #### Continous health checking ####
 #### Lease renewal ####
+Google Cloud resets the 24-hour counter for preemptible instance when you stop the instance. This means that when you stop the instance anytime within the 24-hour period, the instance will be marked as TERMINATED. Restarting the intsnace starts a new 24-hour counter. This means that, if we are running work and we manage to finsh the job(s) in less than 24 hours,to keep custody of the intsnace we can write a script that stops the instance as soon at the jobs are completed and then restarts it. This will allows the tenant to have another 24-hour period. 
+#### Hybrid VM ####
+The idea behind this mechaism is similar to that of virtual machine replication. However, unlike VM replication replication here there is one On-demand instance. The On-demand instance id used as a back-up machine that is only used when we can not find a free and healthy preemptible VM to migrate to after eviction. The on-demand VM stores the states of completed jobs to avoid work loss. To keep the cost lower and similar to that of running only preemptible VMs, the On-demand instance is only used as a transition machine during migration.
 ### Architecture and Implementation ###
 
 references

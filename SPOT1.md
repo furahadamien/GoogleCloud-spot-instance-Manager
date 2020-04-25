@@ -49,7 +49,7 @@ Google Cloud resets the 24-hour counter for preemptible instance when you stop t
 The idea behind this mechaism is similar to that of virtual machine replication. However, unlike VM replication replication here there is one On-demand instance. The On-demand instance id used as a back-up machine that is only used when we can not find a free and healthy preemptible VM to migrate to after eviction. The on-demand VM stores the states of completed jobs to avoid work loss. To keep the cost lower and similar to that of running only preemptible VMs, the On-demand instance is only used as a transition machine during migration.
 ### Architecture and Implementation ###
 #### Design ####
-![Design](design.png)
+![](design.png =100x20)
 #### Pseud code ####
     Driver
     

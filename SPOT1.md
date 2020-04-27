@@ -44,7 +44,70 @@ The key aspect of Preemptible instance is that the virtual machine used are thos
 #### Migration Scheduling #####
 #### Continous health checking ####
 #### Lease renewal ####
+Google Cloud resets the 24-hour counter for preemptible instance when you stop the instance. This means that when you stop the instance anytime within the 24-hour period, the instance will be marked as TERMINATED. Restarting the intsnace starts a new 24-hour counter. This means that, if we are running work and we manage to finsh the job(s) in less than 24 hours,to keep custody of the intsnace we can write a script that stops the instance as soon at the jobs are completed and then restarts it. This will allows the tenant to have another 24-hour period. 
+#### Hybrid VM ####
+The idea behind this mechaism is similar to that of virtual machine replication. However, unlike VM replication replication here there is one On-demand instance. The On-demand instance id used as a back-up machine that is only used when we can not find a free and healthy preemptible VM to migrate to after eviction. The on-demand VM stores the states of completed jobs to avoid work loss. To keep the cost lower and similar to that of running only preemptible VMs, the On-demand instance is only used as a transition machine during migration.
 ### Architecture and Implementation ###
+#### Design ####
+![](design.png)
+#### Pseud code ####
+    Driver
+    
+    init jobs []
+    init jobQueue //priority queue organizes jobs based on definied priority
+    
+    for each job
+        if(machine.has_space())
+            machine.add(job)
+        else
+            jobQueue.add(job)
+    
+    init savedStates
+    while(!jobQueue.isEmpty())
+        init currJob
+        init mini-batches [] // break currJob into batches
+
+        for each mini-bacth
+            proceedJob = minibach.process()
+            savedStates.add(processesJob) //stores all states
+
+            //check if there is a warning or expiring lease
+            if(isWarning() or ~24hrs)
+                //replicate job in another preemptible VM
+                replicateVM(savedstates, currJob, mini-bacth)
+                break;
+        
+        currJob = jobQueue.poll() //get a new job after completion of first
+        //restart machine to renew lease before next job
+        preemptiveVM.restart()
+    
+    Listening to warnings
+    //continousl consume Google Cloud API to listen to warnings
+
+    while(currJob.isRunning)
+        isWarning = process(Google Cloud API)
+
+        if(isWarning)
+            break;
+    
+    function process(google cloud API)
+        if(there is warning)
+            return true
+        else
+            return false
+
+    Continous health checking of available preemptive VM
+
+    init heathyVMs [] //number depends on your needs
+
+    //contiously search for healthy and available VMs 
+    while(!heathyVMs.isFull())
+        heathyVMs.add(cloud.searchVM())
+    
+    //if VM gets used or unhealthy, remove it form list
+    return healthyVMs[0]
+
+
 
 references
 -----------

@@ -1,8 +1,11 @@
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SPOT INSTANCE MANAGER IN GOOGLE CLOUD
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spot Instance Manager in Google Cloud
 ============================================================================
 ---
-authors: [Furaha Damien](https://github.com/furahadamien), [Brian Kirotich](https://github.com/kirotich), [Emmanuel Omweri](https://github.com/eonsongo)
+### Authors: ####
+##### [Furaha Damién](https://github.com/furahadamien), #####
+##### [Brian Kirotich](https://github.com/kirotich), #####
+##### [Emmanuel Omweri](https://github.com/eonsongo) #####
 ---
 Abstract
 ---------
@@ -11,7 +14,7 @@ Cloud service providers offer their unused resources for leasing in the spot mar
 Introduction
 ------------
 ### Motivation ###
-Cloud computing has evolved continuously over the years. Cloud service providers now offer a wide variety of compute resources to their customers that are both cost effective and efficient. However, in some cases, there is a trade off between cost effectiveness and efficiency of the service. One such service that offers low cost compute resources at the expense of reliability is spot instances like Google Cloud's Preemptive VMs. Preemptive VMs are instances that you can create and run at a lower cost than the normal on-demand instances$^2$. These instances require that your application has a fault tolerant mechanism because they can be terminated at anytime depending on their demand. These instances are good for batch processing jobs because if the machine is terminated when processing one batch, the whole job does not completely stop.
+Cloud computing has evolved continuously over the years. Cloud service providers now offer a wide variety of compute resources to their customers that are both cost effective and efficient. However, in some cases, there is a trade off between cost effectiveness and efficiency of the service. One such service that offers low cost compute resources at the expense of reliability is spot instances like Google Cloud's Preemptive VMs. Preemptive VMs are instances that you can create and run at a lower cost than the normal on-demand instances<sup>2</sup>. These instances require that your application has a fault tolerant mechanism because they can be terminated at anytime depending on their demand. These instances are good for batch processing jobs because if the machine is terminated when processing one batch, the whole job does not completely stop.
 
 Unlike Amazon's Elastic Computer Cloud(EC2), Google's Preemptible instances always terminate after they run for 24 hours and their work can not live-migrate to other VM instances. However, the machines can be restarted to renew the 24 hours lease, though they can not be restarted automatically. Even after migration, the discs need to be deleted to avoid incurring storage charges.
 
@@ -44,12 +47,12 @@ The aim of our design is to be able to complete the work at a much lower cost th
 The key aspect of Preemptible instance is that the virtual machine used are those that are deemed to be surplus to requirements by Google Cloud. this means that, as soon as they are deemed required they can be terminated and our jobs evicted. Given that we are only give a 30 second eviction notice, there is need for a fault-tolerance mechnism that ensures that any running jobs and stored states are not lost andd dcan be migrated to health machines without increasing the cost of execution. 
 
 #### Continous checkpointing ####
-To guarantee Quality of Service (QoS) requirements, cloud services need to reduce fault occurrences by implementing fault tolerance mechanisms. Checkpointing is a widely adopted fault tolerance mechanism. However to maintain collective checkpointing on Preempt-able VMs, requires checkpointing for minimized time intervals. However, cloud job execution is highly sensitive to the impact of checkpointing/restart cost. The probability of preemption on Google cloud varies between 5\% to 15\% per day per job. We recommend a technique proposed in $^{10}$ to dynamically tune an equidistant checkpointing mechanism at runtime to adapt to possible changes in preemption probability.
-The authors proposed that an optimal number (x*) of checkpointing intervals to minimize a task expected wall clock time $T_e$ when we set equidistant checkpoints given by: 
+To guarantee Quality of Service (QoS) requirements, cloud services need to reduce fault occurrences by implementing fault tolerance mechanisms. Checkpointing is a widely adopted fault tolerance mechanism. However to maintain collective checkpointing on Preempt-able VMs, requires checkpointing for minimized time intervals. However, cloud job execution is highly sensitive to the impact of checkpointing/restart cost. The probability of preemption on Google cloud varies between 5\% to 15\% per day per job. We recommend a technique proposed in<sup>10</sup> to dynamically tune an equidistant checkpointing mechanism at runtime to adapt to possible changes in preemption probability.
+The authors proposed that an optimal number (x*) of checkpointing intervals to minimize a task expected wall clock time T_e when we set equidistant checkpoints given by: 
 
     \sqrt{\frac{T_e\cdot E \big(Y\big)}{2C}}
 
-$T_e$ is the total execution time in absence of fault tolerance schemes and failures E(Y) is the expected number of failures for a task which can be estimated from statistics based on historical data and C is the checkpointing cost.
+T_e is the total execution time in absence of fault tolerance schemes and failures E(Y) is the expected number of failures for a task which can be estimated from statistics based on historical data and C is the checkpointing cost.
 
 #### Virtual Machine replication ####
 Further, we can support asynchronous replication of virtual machines as proposed by REMUS<sup>11</sup>. In detail, we maintain a back-up instance that maintains a snapshot of the active instance. The active instance is periodically stopped, a copy of dirty pages is performed and afterwards resumed before the copied dirty pages are transferred to the back up instance 

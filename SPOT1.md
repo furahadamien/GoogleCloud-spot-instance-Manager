@@ -2,10 +2,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Spot Instance Manager in Google Cloud
 ============================================================================
 ---
-### Authors: ####
-##### [Furaha Damién](https://github.com/furahadamien), #####
-##### [Brian Kirotich](https://github.com/kirotich), #####
-##### [Emmanuel Omweri](https://github.com/eonsongo) #####
+### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Authors: ####
+##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  [Furaha Damién](https://github.com/furahadamien) #####
+##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  [Brian Kirotich](https://github.com/kirotich) #####
+##### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [Emmanuel Omweri](https://github.com/eonsongo) #####
 ---
 Abstract
 ---------
